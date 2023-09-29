@@ -63,6 +63,7 @@ def data(object_name):
     # get the requested data and update the session data
     session['data'] = df
     session['obj'] = object_name
+    print(request.headers)
     session['session']=request.headers['Cookie']
 
     # render the data
