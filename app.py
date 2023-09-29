@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 from flask_session import Session
 
-load_dotenv(dotenv_path='db_config/.env')
+load_dotenv(dotenv_path='db_config/env')
 DB_TYPE = os.getenv("DB_TYPE")
 def check_table(object_name):
     match DB_TYPE:
