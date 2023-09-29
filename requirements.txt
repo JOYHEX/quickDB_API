@@ -1,0 +1,5 @@
+Flask
+pandas
+python-dotenv
+Flask-Session
+snowflake-connector-python

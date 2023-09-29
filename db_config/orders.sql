@@ -1,0 +1,1 @@
+select * from snowflake_sample_data.tpch_sf100.orders limit 100;
