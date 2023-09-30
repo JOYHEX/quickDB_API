@@ -36,13 +36,15 @@ def check_table(object_name):
             blob_list = []
             for blob_i in container_client.list_blobs():
                 blob_list.append(blob_i.name)
-
+            print(blob_list)
             #generate a shared access signiture for files and load them into Python
             for blob_i in blob_list:
                 #generate a shared access signature for each blob file
+                print(blob_i)
                 file = blob_i.split('/')
                 filename=file[len(file)-1]
                 if filename == f'{object_name}.xlsx':
+                    print('file found')
                     sas_i = generate_blob_sas(account_name = account_name,
                                                 container_name = container_name,
                                                 blob_name = blob_i,
