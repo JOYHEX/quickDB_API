@@ -18,6 +18,44 @@ def check_table(object_name):
                 password=os.getenv('SNOW_PASSWORD'),
                 account=os.getenv('SNOW_ACCOUNT')
             )
+        case 'AZURE':
+            from azure.storage.blob import BlobServiceClient, generate_blob_sas, BlobSasPermissions
+            account_name = os.getenv('ACCOUNT_NAME')
+            account_key = os.getenv('ACCOUNT_KEY')
+            container_name = os.getenv('CONTAINER_NAME')
+
+            #create a client to interact with blob storage
+            connect_str = 'DefaultEndpointsProtocol=https;AccountName=' + account_name + ';AccountKey=' + account_key + ';EndpointSuffix=core.windows.net'
+            blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+
+            #use the client to connect to the container
+            container_client = blob_service_client.get_container_client(container_name)
+
+            #get a list of all blob files in the container
+            blob_list = []
+            for blob_i in container_client.list_blobs():
+                blob_list.append(blob_i.name)
+
+            #generate a shared access signiture for files and load them into Python
+            for blob_i in blob_list:
+                #generate a shared access signature for each blob file
+                file = blob_i.split('/')
+                filename=file[len(file)-1]
+                if filename == object_name:
+                    sas_i = generate_blob_sas(account_name = account_name,
+                                                container_name = container_name,
+                                                blob_name = blob_i,
+                                                account_key=account_key,
+                                                permission=BlobSasPermissions(read=True),
+                                                expiry=datetime.utcnow() + timedelta(hours=1))
+                    
+                    sas_url = 'https://' + account_name+'.blob.core.windows.net/' + container_name + '/' + blob_i + '?' + sas_i
+                    
+                    df = pd.read_excel(sas_url)
+                    return df
+                else:
+                    return
+
         case default:
             return
     cur = conn.cursor()

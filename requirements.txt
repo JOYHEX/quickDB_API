@@ -3,3 +3,4 @@ pandas
 python-dotenv
 Flask-Session
 snowflake-connector-python
+azure-storage-blob
