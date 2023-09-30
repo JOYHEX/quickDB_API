@@ -90,7 +90,7 @@ def data(object_name):
     start_iloc=0
     page_size = int(os.getenv('PAGE_SIZE'))
     if request.args['page']:
-        start_iloc=int(request.args['page'])*page_size-1
+        start_iloc=(int(request.args['page'])-1)*20
 
     # if data available in session, render from session 
     if 'session' in session and session.get('session')==request.headers['Cookie']:
