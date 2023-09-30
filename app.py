@@ -41,7 +41,7 @@ def check_table(object_name):
                 #generate a shared access signature for each blob file
                 file = blob_i.split('/')
                 filename=file[len(file)-1]
-                if filename == object_name:
+                if filename == f'{object_name}.xlsx':
                     sas_i = generate_blob_sas(account_name = account_name,
                                                 container_name = container_name,
                                                 blob_name = blob_i,
