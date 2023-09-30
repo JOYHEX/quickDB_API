@@ -56,8 +56,8 @@ def check_table(object_name):
                     
                     df = pd.read_excel(sas_url)
                     return df
-                else:
-                    return
+
+            return
 
         case default:
             return
